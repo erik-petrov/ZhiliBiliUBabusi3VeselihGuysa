@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -113,7 +114,10 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 tlp.Controls.Add(N, 4 ,i);
             }
             tlp.Controls.Add(lb, 3, 0);
+            tlp.SetColumnSpan(label, 2);
+            tlp.SetColumnSpan(lb, 2);
             tlp.Controls.Add(label, 1, 0);
+            tlp.SetColumnSpan(start, 2);
             tlp.Controls.Add(start, 2, 5);
             Controls.Add(tlp);
         }
