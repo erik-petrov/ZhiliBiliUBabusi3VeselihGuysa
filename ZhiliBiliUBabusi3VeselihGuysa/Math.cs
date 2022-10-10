@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         int divOne, divTwo;
         int minOne, minTwo;
         int timeLeft;
+        string Name;
         TableLayoutPanel tlp;
         Timer timer;
         Label lb;
         Button start;
-        public Math()
+        public Math(string name)
         {
+            Name = name;
             Text = "Math Quiz";
             Width = 500;
             Height = 400;
@@ -66,11 +69,8 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
+            for (int i = 0; i < 5; i++)
+                tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
             for (int i = 1; i < 5; i++)
             {
                 Label num1 = new Label
@@ -134,6 +134,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 MessageBox.Show("You got all the answers right!",
                                 "Congratulations!");
                 start.Enabled = true;
+                ApplicationContext.SaveRes(Name, timeLeft, true);
             }
             else if (timeLeft > 0)
             {
@@ -191,7 +192,6 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             lb.Text = "30 seconds";
             timer.Start();
         }
-
         public int[] getNums(string sym)
         {
             int num1 = 0;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace ZhiliBiliUBabusi3VeselihGuysa
 {
@@ -16,14 +17,18 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         TableLayoutPanel tlp;
         Label firstClicked = null;
         Label secondClicked = null;
-        Timer tm;
+        Timer tm, scoreTimer;
+        int Time;
+        string Name;
         List<string> icons = new List<string>()
         {
             "!", "!", "N", "N", ",", ",", "k", "k",
             "b", "b", "v", "v", "w", "w", "z", "z"
         };
-        public Match()
+        public Match(string name)
         {
+            Time = 0;
+            Name = name;
             Width = 600;
             Height = 600;
             MaximizeBox = false;
@@ -61,6 +66,9 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tm = new Timer();
             tm.Interval = 750;
             tm.Tick += Tm_Tick;
+            scoreTimer = new Timer();
+            scoreTimer.Interval = 750;
+            scoreTimer.Tick += (object s, EventArgs e) => ++Time;
             Controls.AddRange(new Control[] { tlp, });
             AssignIconsToSquares();
             //InitializeComponent();
@@ -137,6 +145,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             }
 
             MessageBox.Show("You matched all the icons!", "Congratulations");
+            ApplicationContext.SaveRes(Name, Time, false);
             Close();
         }
     }
