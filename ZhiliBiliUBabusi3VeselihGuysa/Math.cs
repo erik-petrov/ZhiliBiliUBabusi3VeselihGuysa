@@ -21,14 +21,14 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         int divOne, divTwo;
         int minOne, minTwo;
         int timeLeft;
-        string Name;
+        string LoggedName;
         TableLayoutPanel tlp;
         Timer timer;
         Label lb;
         Button start;
         public Math(string name)
         {
-            Name = name;
+            LoggedName = name;
             Text = "Math Quiz";
             Width = 500;
             Height = 400;
@@ -134,7 +134,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 MessageBox.Show("You got all the answers right!",
                                 "Congratulations!");
                 start.Enabled = true;
-                ApplicationContext.SaveRes(Name, timeLeft, true);
+                ApplicationContext.SaveRes(LoggedName, timeLeft, true);
             }
             else if (timeLeft > 0)
             {

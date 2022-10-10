@@ -14,31 +14,33 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
 {
     public partial class Menu : Form
     {
-        TextBox name;
-        Button log, reg, logout;
+        static Button log, reg, logout;
+        static Label loggedAs;
         public static string loggedEmail, loggedName;
         public Menu()
         {
             loggedEmail = "";
             loggedName = "";
-             reg = new Button
+            reg = new Button
             {
                 Text = "Registratsioon",
                 Dock = DockStyle.Fill
             };
             reg.Click += (object sender, EventArgs e) => new Registration().Show();
-             log = new Button
+            log = new Button
             {
                 Text = "Login",
                 Dock = DockStyle.Fill
             };
             log.Click += (object sender, EventArgs e) => new Login().Show();
-             logout = new Button
+            logout = new Button
             {
                 Text = "Logi välja",
                 Dock = DockStyle.Fill,
             };
-            logout.Click += (object s, EventArgs e) => { loggedEmail = ""; loggedName = ""; Show(); };
+            loggedAs = new Label();
+            loggedAs.Text = "Nimi: " + loggedName;
+            logout.Click += (object s, EventArgs e) => { loggedEmail = ""; loggedName = ""; ShowButtons(); };
             Button btn1 = new Button
             {
                 Text = "Pildi asi",
@@ -50,19 +52,19 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 Text = "Matemaatika asi",
                 Dock = DockStyle.Fill
             };
-            btn2.Click += (object sender, EventArgs e) => new Math(name.Text).Show();
+            btn2.Click += (object sender, EventArgs e) => new Math(loggedName).Show();
             Button btn3 = new Button
             {
                 Text = "Matši asi",
                 Dock = DockStyle.Fill
             };
-            btn3.Click += (object sender, EventArgs e) => new Match(name.Text).Show();
+            btn3.Click += (object sender, EventArgs e) => new Match(loggedName).Show();
             Button btn4 = new Button
             {
                 Text = "Edetabelid",
                 Dock = DockStyle.Fill
             };
-            btn4.Click += (object sender, EventArgs e) => new Leaderboard(name.Text).Show();
+            btn4.Click += (object sender, EventArgs e) => new Leaderboard(loggedName).Show();
             Button changeName = new Button
             {
                 Text = "Nimeta ümber"
@@ -85,33 +87,27 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.Controls.Add(changeName, 2, 4);
             tlp.Controls.Add(log, 0, 4);
             tlp.Controls.Add(reg, 1, 4);
+            loggedAs.Visible = false;
+            logout.Visible = false;
+            tlp.Controls.Add(loggedAs, 0, 4);
+            tlp.Controls.Add(logout, 1, 4);
             tlp.SetColumnSpan(btn1, 3);
             tlp.SetColumnSpan(btn2, 3);
             tlp.SetColumnSpan(btn3, 3);
             tlp.SetColumnSpan(btn4, 3);
-            if (LoggedIn())
-            {
-                log.Hide();
-                reg.Hide();
-            }
             Controls.Add(tlp);
             //InitializeComponent();
         }
-
-        private void Logout_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void ChangeName_Click(object sender, EventArgs e)
         {
-            if (name.Text != "" && LoggedIn())
+            if (LoggedIn())
             {
                 string newName = Interaction.InputBox("Name", "Rename");
                 try
                 {
-                    User.Rename(name.Text, newName, loggedEmail);
-                    name.Text = newName;
+                    User.Rename(loggedName, newName, loggedEmail);
+                    loggedName = newName;
+                    loggedAs.Text = "Nimi: " + loggedName;
                 }
                 catch(Exception err)
                 {
@@ -123,11 +119,20 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 MessageBox.Show("Empty name field.");
             }
         }
-        private void Show()
+        public static void ShowButtons()
         {
-            logout.Hide();
-            reg.Show();
-            log.Show();
+            logout.Visible = false;
+            loggedAs.Visible = false;
+            reg.Visible = true;
+            log.Visible = true;
+        }
+        public static void HideButtons()
+        {
+            logout.Visible = true;
+            loggedAs.Visible = true;
+            loggedAs.Text = "Nimi: "+loggedName;
+            reg.Visible = false;
+            log.Visible = false;
         }
         private static bool LoggedIn()
         {

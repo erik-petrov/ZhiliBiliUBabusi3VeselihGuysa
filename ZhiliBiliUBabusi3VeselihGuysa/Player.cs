@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Web;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace ZhiliBiliUBabusi3VeselihGuysa
 {
@@ -47,7 +48,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             if (newName == "") throw new ArgumentException("New name is empty");
             using (ApplicationContext db = new ApplicationContext())
             {
-                User? user = db.Users.Where(u => oldName == u.Name && email == u.Email).FirstOrDefault();
+                User user = db.Users.Where(u => oldName == u.Name && email == u.Email).FirstOrDefault();
                 if (user != null)
                 {
                     user.Name = newName;
@@ -60,7 +61,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User? user = db.Users.Where(u => name == u.Name && pass == u.Password).FirstOrDefault();
+                User user = db.Users.Where(u => name == u.Name && pass == u.Password).FirstOrDefault();
                 if (user != null)
                 {
                     Menu.loggedEmail = user.Email;
@@ -79,6 +80,8 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 {
                     db.Users.Add(new User(name, email, sugu, vanus, pass));
                     db.SaveChanges();
+                    Menu.loggedEmail = email;
+                    Menu.loggedName = name;
                     return true;
                 }
                 catch(Exception e)

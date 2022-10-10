@@ -19,7 +19,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         Label secondClicked = null;
         Timer tm, scoreTimer;
         int Time;
-        string Name;
+        string LoggedName;
         List<string> icons = new List<string>()
         {
             "!", "!", "N", "N", ",", ",", "k", "k",
@@ -28,7 +28,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         public Match(string name)
         {
             Time = 0;
-            Name = name;
+            LoggedName = name;
             Width = 600;
             Height = 600;
             MaximizeBox = false;
@@ -145,7 +145,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             }
 
             MessageBox.Show("You matched all the icons!", "Congratulations");
-            ApplicationContext.SaveRes(Name, Time, false);
+            ApplicationContext.SaveRes(LoggedName, Time, false);
             Close();
         }
     }

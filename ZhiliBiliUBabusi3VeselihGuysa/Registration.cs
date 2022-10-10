@@ -92,6 +92,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 if (User.TryReg(name.Text, password.Text, email.Text, sugu, (int)vanus.Value))
                 {
                     MessageBox.Show("Edukas registratsioon!");
+                    ZhiliBiliUBabusi3VeselihGuysa.Menu.HideButtons();
                     this.Close();
                 }
             }
