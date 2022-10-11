@@ -29,7 +29,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         public Math(string email)
         {
             loggedEmail = email;
-            Text = "Math Quiz";
+            Text = "Matemaatika viktoriin";
             Width = 500;
             Height = 400;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -44,12 +44,12 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             Label label = new Label
             {
                 Font = new Font(Font.FontFamily, (float)15.75),
-                Text = "Time Left",
+                Text = "Aega jäänud",
                 AutoSize = true,
                 Location = new Point(140, 10)
             };
             start = new Button {
-                Text = "Start the quiz",
+                Text = "Alustage viktoriini",
                 Font = new Font(Font.FontFamily, 14),
                 AutoSize = true,
                 TabIndex = 0,
@@ -138,7 +138,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             else if (timeLeft > 0)
             {
                 timeLeft = timeLeft - 1;
-                lb.Text = timeLeft + " seconds";
+                lb.Text = timeLeft + " sekundid";
             }
             else
             {
@@ -188,7 +188,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 N.Value = 0;
             }
             timeLeft = 30;
-            lb.Text = "30 seconds";
+            lb.Text = "30 sekundid";
             timer.Start();
         }
         public int[] getNums(string sym)

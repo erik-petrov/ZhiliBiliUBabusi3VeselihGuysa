@@ -30,17 +30,17 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.SetColumnSpan(pb, 2);
             cb = new CheckBox
             {
-                Text = "Stretch"
+                Text = "Venitada"
             };
             cb.CheckedChanged += Cb_CheckedChanged;
             FlowLayoutPanel flp = new FlowLayoutPanel { Dock = DockStyle.Fill};
-            Button close = new Button {Text = "Close", AutoSize = true};
+            Button close = new Button {Text = "Sulge", AutoSize = true};
             close.Click += Close_Click;
-            Button bg = new Button { Text = "Set the background color", AutoSize = true };
+            Button bg = new Button { Text = "Määrake taustavärv", AutoSize = true };
             bg.Click += Bg_Click;
-            Button clr = new Button { Text = "Clear the picture", AutoSize = true };
+            Button clr = new Button { Text = "Tühjenda pilt", AutoSize = true };
             clr.Click += Clr_Click;
-            Button show = new Button { Text = "Show a picture", AutoSize = true };
+            Button show = new Button { Text = "Näita pilti", AutoSize = true };
             show.Click += Show_Click;
             flp.Controls.Add(cb);
             flp.Controls.Add(close);
@@ -50,7 +50,8 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.Controls.Add(flp);
 
             ofd = new OpenFileDialog { Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All files (*.*)|*.*",
-            Title = "Select a picture file"};
+            Title = "Valige pildifail"
+            };
             cd = new ColorDialog();
             Controls.Add(tlp);
             //InitializeComponent();

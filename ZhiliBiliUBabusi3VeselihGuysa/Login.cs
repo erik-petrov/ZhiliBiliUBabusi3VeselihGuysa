@@ -28,7 +28,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             Label nameL = new Label();
             nameL.Text = "Email";
             Label emailL = new Label();
-            emailL.Text = "Password";
+            emailL.Text = "Parool";
             email = new TextBox
             {
                 
@@ -39,7 +39,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             };
             Button btn = new Button
             {
-                Text = "Login",
+                Text = "Logi sisse",
                 Dock = DockStyle.Fill,
             };
             tlp.Controls.Add(nameL, 0, 0);

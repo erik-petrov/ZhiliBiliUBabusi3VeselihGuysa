@@ -45,7 +45,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         }
         public static void Rename(string oldName, string newName, string email)
         {
-            if (newName == "") throw new ArgumentException("New name is empty");
+            if (newName == "") throw new ArgumentException("Uus nimi on tühi");
             using (ApplicationContext db = new ApplicationContext())
             {
                 User user = db.Users.Where(u => oldName == u.Name && email == u.Email).FirstOrDefault();

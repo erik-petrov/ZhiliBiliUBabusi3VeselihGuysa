@@ -49,19 +49,19 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             forgot.Click += (object s, EventArgs e) => new ForgotPassword().Show();
             Button btn1 = new Button
             {
-                Text = "Pildi asi",
+                Text = "Pildi prograam",
                 Dock = DockStyle.Fill
             };
             btn1.Click += (object sender, EventArgs e) => new Picture().Show();
             Button btn2 = new Button
             {
-                Text = "Matemaatika asi",
+                Text = "Matemaatika mäng",
                 Dock = DockStyle.Fill
             };
             btn2.Click += (object sender, EventArgs e) => new Math(loggedEmail).Show();
             Button btn3 = new Button
             {
-                Text = "Matši asi",
+                Text = "Matši mäng",
                 Dock = DockStyle.Fill
             };
             btn3.Click += (object sender, EventArgs e) => new Match(loggedEmail).Show();
@@ -120,7 +120,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 }
                 catch(Exception err)
                 {
-                    MessageBox.Show(err.Message, "Kasutajat ei saa ümber nimetada.");
+                    MessageBox.Show(err.Message, "Selle kasutaja ei saa ümber nimetada.");
                 }
             }
             else
