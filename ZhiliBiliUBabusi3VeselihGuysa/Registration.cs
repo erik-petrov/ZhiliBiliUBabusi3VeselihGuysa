@@ -17,6 +17,8 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         CheckBox male;
         public Registration()
         {
+            Height = 200;
+            Width = 200;
             TableLayoutPanel tlp = new TableLayoutPanel();
             tlp.Dock = DockStyle.Fill;
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
@@ -24,7 +26,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
-            tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+            tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 30));
             tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             Label nameL = new Label();

@@ -17,17 +17,17 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         public DbSet<MatchScore> Match => Set<MatchScore>();
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
-        public static void SaveRes(string name, int time, bool math)
+        public static void SaveRes(string email, int time, bool math)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (name == "")
+                if (email == "")
                     return;
-                User plr = db.Users.Where(b => b.Name == name).FirstOrDefault();
+                User plr = db.Users.Where(b => b.Email == email).FirstOrDefault();
                 if (plr == null)
                 {
                     /*User.CreatePlayer(name, db);
@@ -51,7 +51,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-            .HasIndex(u => u.Name)
+            .HasIndex(u => u.Email)
             .IsUnique();
         }
     }

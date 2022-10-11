@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace ZhiliBiliUBabusi3VeselihGuysa
 {
@@ -19,16 +18,16 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         Label secondClicked = null;
         Timer tm, scoreTimer;
         int Time;
-        string LoggedName;
+        string loggedEmail;
         List<string> icons = new List<string>()
         {
             "!", "!", "N", "N", ",", ",", "k", "k",
             "b", "b", "v", "v", "w", "w", "z", "z"
         };
-        public Match(string name)
+        public Match(string email)
         {
             Time = 0;
-            LoggedName = name;
+            loggedEmail = email;
             Width = 600;
             Height = 600;
             MaximizeBox = false;
@@ -67,8 +66,9 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tm.Interval = 750;
             tm.Tick += Tm_Tick;
             scoreTimer = new Timer();
-            scoreTimer.Interval = 750;
-            scoreTimer.Tick += (object s, EventArgs e) => ++Time;
+            scoreTimer.Interval = 1000;
+            scoreTimer.Tick += (object s, EventArgs e) => Time++;
+            scoreTimer.Start();
             Controls.AddRange(new Control[] { tlp, });
             AssignIconsToSquares();
             //InitializeComponent();
@@ -143,9 +143,9 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                         return;
                 }
             }
-
-            MessageBox.Show("You matched all the icons!", "Congratulations");
-            ApplicationContext.SaveRes(LoggedName, Time, false);
+            scoreTimer.Stop();
+            MessageBox.Show("Sa sobitasid kõik ikoonid!", "Palju õnne");
+            HelperFunctions.SaveResults(loggedEmail, Time, false);
             Close();
         }
     }

@@ -14,7 +14,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
 {
     public partial class Menu : Form
     {
-        static Button log, reg, logout;
+        static Button log, reg, logout, forgot, changeName;
         static Label loggedAs;
         public static string loggedEmail, loggedName;
         public Menu()
@@ -41,6 +41,12 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             loggedAs = new Label();
             loggedAs.Text = "Nimi: " + loggedName;
             logout.Click += (object s, EventArgs e) => { loggedEmail = ""; loggedName = ""; ShowButtons(); };
+            forgot = new Button
+            {
+                Text = "Ei ole Parooli?",
+                AutoSize = true,
+            };
+            forgot.Click += (object s, EventArgs e) => new ForgotPassword().Show();
             Button btn1 = new Button
             {
                 Text = "Pildi asi",
@@ -52,22 +58,23 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 Text = "Matemaatika asi",
                 Dock = DockStyle.Fill
             };
-            btn2.Click += (object sender, EventArgs e) => new Math(loggedName).Show();
+            btn2.Click += (object sender, EventArgs e) => new Math(loggedEmail).Show();
             Button btn3 = new Button
             {
                 Text = "Matši asi",
                 Dock = DockStyle.Fill
             };
-            btn3.Click += (object sender, EventArgs e) => new Match(loggedName).Show();
-            Button btn4 = new Button
+            btn3.Click += (object sender, EventArgs e) => new Match(loggedEmail).Show();
+            Button leaderboard = new Button
             {
                 Text = "Edetabelid",
                 Dock = DockStyle.Fill
             };
-            btn4.Click += (object sender, EventArgs e) => new Leaderboard(loggedName).Show();
-            Button changeName = new Button
+            leaderboard.Click += (object sender, EventArgs e) => new Leaderboard(loggedEmail).Show();
+             changeName = new Button
             {
-                Text = "Nimeta ümber"
+                Text = "Nimeta ümber",
+                AutoSize = true,
             };
             changeName.Click += ChangeName_Click;
             TableLayoutPanel tlp = new TableLayoutPanel();
@@ -83,18 +90,20 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             tlp.Controls.Add(btn1, 0, 0);
             tlp.Controls.Add(btn2, 0, 1);
             tlp.Controls.Add(btn3, 0, 2);
-            tlp.Controls.Add(btn4, 0, 3);
+            tlp.Controls.Add(leaderboard, 0, 3);
             tlp.Controls.Add(changeName, 2, 4);
+            tlp.Controls.Add(forgot, 2, 4);
             tlp.Controls.Add(log, 0, 4);
             tlp.Controls.Add(reg, 1, 4);
             loggedAs.Visible = false;
             logout.Visible = false;
+            changeName.Visible = false;
             tlp.Controls.Add(loggedAs, 0, 4);
             tlp.Controls.Add(logout, 1, 4);
             tlp.SetColumnSpan(btn1, 3);
             tlp.SetColumnSpan(btn2, 3);
             tlp.SetColumnSpan(btn3, 3);
-            tlp.SetColumnSpan(btn4, 3);
+            tlp.SetColumnSpan(leaderboard, 3);
             Controls.Add(tlp);
             //InitializeComponent();
         }
@@ -102,7 +111,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         {
             if (LoggedIn())
             {
-                string newName = Interaction.InputBox("Name", "Rename");
+                string newName = Interaction.InputBox("Nimi", "Nimeta ümber");
                 try
                 {
                     User.Rename(loggedName, newName, loggedEmail);
@@ -111,28 +120,32 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 }
                 catch(Exception err)
                 {
-                    MessageBox.Show(err.Message, "Unable to rename user.");
+                    MessageBox.Show(err.Message, "Kasutajat ei saa ümber nimetada.");
                 }
             }
             else
             {
-                MessageBox.Show("Empty name field.");
+                MessageBox.Show("Tühi nimeväli.");
             }
         }
         public static void ShowButtons()
         {
             logout.Visible = false;
             loggedAs.Visible = false;
+            changeName.Visible = false;
             reg.Visible = true;
             log.Visible = true;
+            forgot.Visible = true;
         }
         public static void HideButtons()
         {
             logout.Visible = true;
             loggedAs.Visible = true;
+            changeName.Visible = true;
             loggedAs.Text = "Nimi: "+loggedName;
             reg.Visible = false;
             log.Visible = false;
+            forgot.Visible = false;
         }
         private static bool LoggedIn()
         {

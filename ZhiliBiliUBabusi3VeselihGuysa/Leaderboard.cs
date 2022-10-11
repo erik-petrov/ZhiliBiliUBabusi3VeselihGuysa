@@ -17,14 +17,14 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
 {
     public partial class Leaderboard : Form
     {
-        string _name;
+        string _email;
         ListViewItemCollection lvic;
         private ListViewColumnSorter lvwColumnSorter;
         private ListView lv;
-        public Leaderboard(string Name)
+        public Leaderboard(string Email)
         {
             lvwColumnSorter = new ListViewColumnSorter();
-            _name = Name;
+            _email = Email;
             CheckBox check = new CheckBox();
             ComboBox cb = new ComboBox();
             check.Text = "Personal?";
@@ -34,7 +34,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             cb.SelectedValueChanged += (object s, EventArgs e) => fillListView(cb.GetItemText(cb.SelectedItem), check.Checked);
             cb.SelectedItem = "Math game";
             TableLayoutPanel tlp = new TableLayoutPanel();
-            tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+            tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
             tlp.Dock = DockStyle.Fill;
 
@@ -95,7 +95,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                     {
                         var n = new ListViewItem() { Text = item.user.Name };
                         n.SubItems.Add(item.game.Time.ToString());
-                        if (personal && _name != item.user.Name)
+                        if (personal && _email != item.user.Email)
                             continue;
                         lvic.Add(n);
                     }
@@ -109,7 +109,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                     {
                         var n = new ListViewItem() { Text = item.user.Name };
                         n.SubItems.Add(item.game.Time.ToString());
-                        if (personal && _name != item.user.Name)
+                        if (personal && _email != item.user.Email)
                             continue;
                         lvic.Add(n);
                     }

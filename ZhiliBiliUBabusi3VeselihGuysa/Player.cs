@@ -57,20 +57,36 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 }
             }
         }
-        public static bool TryLogin(string name, string pass)
+        public static bool TryLogin(string email, string pass)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                User user = db.Users.Where(u => name == u.Name && pass == u.Password).FirstOrDefault();
-                if (user != null)
+                try
                 {
-                    Menu.loggedEmail = user.Email;
-                    Menu.loggedName = user.Name;
-                    return true;
+                    User user = db.Users.Where(u => email == u.Email).FirstOrDefault();
+                    if (user != null)
+                    {
+
+                        if (user.Password == pass)
+                        {
+                            Menu.loggedEmail = user.Email;
+                            Menu.loggedName = user.Name;
+                            return true;
+                        }
+                        throw new Exception("Parool on viga!");
+                        
+                    }
+                    else
+                    {
+                        throw new Exception("Ei ole seda useri");
+                    }
                 }
-                else
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
                     return false;
-            }
+                }
+            }    
         }
         public static bool TryReg(string name, string pass, string email, SuguEnum sugu, int vanus)
         {
@@ -78,18 +94,52 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             {
                 try
                 {
+                    if (db.Users.Where(u => email == u.Email).FirstOrDefault() != null)
+                    {
+                        throw new Exception("Email on regisreeritud");
+                    }
                     db.Users.Add(new User(name, email, sugu, vanus, pass));
                     db.SaveChanges();
                     Menu.loggedEmail = email;
                     Menu.loggedName = name;
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show(e.Message);
                     return false;
                 }
             }
+        }
+        public static string ForgotPassword(string name, string email, int vanus)
+        {
+            string password = "";
+            try
+            {
+                using(ApplicationContext db = new ApplicationContext())
+                {
+                    var user = db.Users.Where(u => email == u.Email).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if(user.Name == name && user.Vanus == vanus)
+                        {
+                            Clipboard.SetText(user.Password);
+                            MessageBox.Show($"Teie parool on: {user.Password}\nSee parool on ka kopeeritud.");
+                            return user.Password;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Ma ei tea seda emaili");
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return "";
+            }
+            return password;
         }
     }
     [Table("Match")]

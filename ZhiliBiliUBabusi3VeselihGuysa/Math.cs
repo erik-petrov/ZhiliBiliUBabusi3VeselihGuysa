@@ -21,14 +21,14 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         int divOne, divTwo;
         int minOne, minTwo;
         int timeLeft;
-        string LoggedName;
+        string loggedEmail;
         TableLayoutPanel tlp;
         Timer timer;
         Label lb;
         Button start;
-        public Math(string name)
+        public Math(string email)
         {
-            LoggedName = name;
+            loggedEmail = email;
             Text = "Math Quiz";
             Width = 500;
             Height = 400;
@@ -131,10 +131,9 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             if (CheckTheAnswer())
             {
                 timer.Stop();
-                MessageBox.Show("You got all the answers right!",
-                                "Congratulations!");
+                MessageBox.Show("Sa said kõik vastused õiged!", "Palju õnne");
                 start.Enabled = true;
-                ApplicationContext.SaveRes(LoggedName, timeLeft, true);
+                HelperFunctions.SaveResults(loggedEmail, timeLeft, true);
             }
             else if (timeLeft > 0)
             {
@@ -144,8 +143,8 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             else
             {
                 timer.Stop();
-                lb.Text = "Time's up!";
-                MessageBox.Show("You didn't finish in time.", "Sorry!");
+                lb.Text = "Aeg on läbi!";
+                MessageBox.Show("Sa ei lõpetanud õigeks ajaks.", "Vabandust!");
                 N.Value = plusOne + plusTwo;
                 minN.Value = minOne - minTwo;
                 mulN.Value = mulOne * mulTwo;
