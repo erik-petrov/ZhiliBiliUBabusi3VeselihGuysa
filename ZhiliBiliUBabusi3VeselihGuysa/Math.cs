@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Runtime.Remoting.Contexts;
 using System.Security.Policy;
 using System.Text;
@@ -26,8 +28,14 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         Timer timer;
         Label lb;
         Button start;
+        int hardness;
+        bool add, sub, mul, div;
         public Math(string email)
         {
+            if (!int.TryParse(Interaction.InputBox("Raskus", "Palun sisesta kui raske te tahate et mäng oleks"), out hardness))
+                hardness = 1;
+            if (hardness < 0) hardness = 1;
+            if (hardness > 10) hardness = 9;
             loggedEmail = email;
             Text = "Matemaatika viktoriin";
             Width = 500;
@@ -113,6 +121,7 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 tlp.Controls.Add(equals, 3 ,i);
                 tlp.Controls.Add(N, 4 ,i);
             }
+            tlp.Controls.Add(new Label { Text = "Raskus: " + hardness}, 0, 5);
             tlp.Controls.Add(lb, 3, 0);
             tlp.SetColumnSpan(label, 2);
             tlp.SetColumnSpan(lb, 2);
@@ -165,10 +174,11 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
             NumericUpDown minN = (NumericUpDown)tlp.GetControlFromPosition(4, 2);
             NumericUpDown mulN = (NumericUpDown)tlp.GetControlFromPosition(4, 3);
             NumericUpDown divN = (NumericUpDown)tlp.GetControlFromPosition(4, 4);
-            if ((plusOne + plusTwo == N.Value)
-                && (minOne - minTwo == minN.Value)
-                && (mulOne * mulTwo == mulN.Value)
-                && (divOne / divTwo == divN.Value))
+            if (plusOne + plusTwo == N.Value) { add = true; MakeGreen(1); }
+            if (minOne - minTwo == minN.Value) { sub = true; MakeGreen(2); }
+            if (mulOne * mulTwo == mulN.Value) { mul = true; MakeGreen(3); }
+            if (divOne / divTwo == divN.Value) { div = true; MakeGreen(4); }
+            if (add && sub && mul && div)
                 return true;
             else
                 return false;
@@ -200,30 +210,40 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
                 case "+":
                     num1 = rnd.Next(51);
                     num2 = rnd.Next(51);
-                    plusOne = num1;
-                    plusTwo = num2;
+                    plusOne = num1*hardness;
+                    plusTwo = num2 * hardness;
                     break;
                 case "-":
-                    num1 = rnd.Next(1, 101);
+                    num1 = rnd.Next(1, 101 * hardness);
                     num2 = rnd.Next(1, num1);
                     minOne = num1;
                     minTwo = num2;
                     break;
                 case "/":
-                    num2 = rnd.Next(2, 11);
+                    num2 = rnd.Next(2, 11 * hardness);
                     int temporaryQuotient = rnd.Next(2, 11);
                     num1 = num2 * temporaryQuotient;
                     divOne = num1;
                     divTwo = num2;
                     break;
                 case "*":
-                    num1 = rnd.Next(2, 11);
-                    num2 = rnd.Next(2, 11);
+                    num1 = rnd.Next(2, 11 * hardness);
+                    num2 = rnd.Next(2, 11 * hardness);
                     mulOne = num1;
                     mulTwo = num2;
                     break;
             }
             return new int[2] { num1, num2 };
+        }
+        private void MakeGreen(int row)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Control thing = tlp.GetControlFromPosition(i, row);
+                thing.BackColor = Color.Green;
+            }
+            NumericUpDown asd = (NumericUpDown)tlp.GetControlFromPosition(4, row);
+            asd.ReadOnly = true;
         }
     }
 }

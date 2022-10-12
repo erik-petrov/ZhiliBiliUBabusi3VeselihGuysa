@@ -60,19 +60,21 @@ namespace ZhiliBiliUBabusi3VeselihGuysa
         private void Cb_CheckedChanged(object sender, EventArgs e)
         {
             if (cb.Checked)
-            {
                 pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
             else
-            {
                 pb.SizeMode = PictureBoxSizeMode.Normal;
-            }
         }
 
         private void Show_Click(object sender, EventArgs e)
         {
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                Image img = Image.FromFile(ofd.FileName);
+                if (img.Width > 900 || img.Height > 900)
+                {
+                    MessageBox.Show("Kuna pildi suurus on suurem kui rakenduse aken, venitasime pildi teie jaoks välja.");
+                    cb.Checked = true;
+                }
                 pb.Load(ofd.FileName);
             }
         }
